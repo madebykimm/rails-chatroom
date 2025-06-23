@@ -22,9 +22,11 @@ default: &default
 
 development:
   <<: *default
-  database: chatroom_backend_development
+  database: <%= ENV["CHATROOM_BACKEND_DATABASE_NAME"] || "chatroom_backend_development" %>
   username: <%= ENV["CHATROOM_BACKEND_DATABASE_USER"] %>
   password: <%= ENV["CHATROOM_BACKEND_DATABASE_PASSWORD"] %>
+  host: <%= ENV["CHATROOM_BACKEND_DATABASE_HOST"] || "localhost" %>
+  port: <%= ENV["CHATROOM_BACKEND_DATABASE_PORT"] || 5432 %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -58,9 +60,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: chatroom_backend_test
+  database: <%= ENV["CHATROOM_BACKEND_DATABASE_NAME_TEST"] || "chatroom_backend_test" %>
   username: <%= ENV["CHATROOM_BACKEND_DATABASE_USER"] %>
   password: <%= ENV["CHATROOM_BACKEND_DATABASE_PASSWORD"] %>
+  host: <%= ENV["CHATROOM_BACKEND_DATABASE_HOST"] || "localhost" %>
+  port: <%= ENV["CHATROOM_BACKEND_DATABASE_PORT"] || 5432 %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -85,18 +89,20 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: chatroom_backend_production
+    database: <%= ENV["CHATROOM_BACKEND_DATABASE_NAME_PROD"] || "chatroom_backend_production" %>
     username: <%= ENV["CHATROOM_BACKEND_DATABASE_USER"] %>
     password: <%= ENV["CHATROOM_BACKEND_DATABASE_PASSWORD"] %>
+    host: <%= ENV["CHATROOM_BACKEND_DATABASE_HOST"] || "localhost" %>
+    port: <%= ENV["CHATROOM_BACKEND_DATABASE_PORT"] || 5432 %>
   cache:
     <<: *primary_production
-    database: chatroom_backend_production_cache
+    database: <%= ENV["CHATROOM_BACKEND_DATABASE_NAME_CACHE"] || "chatroom_backend_production_cache" %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: chatroom_backend_production_queue
+    database: <%= ENV["CHATROOM_BACKEND_DATABASE_NAME_QUEUE"] || "chatroom_backend_production_queue" %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: chatroom_backend_production_cable
+    database: <%= ENV["CHATROOM_BACKEND_DATABASE_NAME_CABLE"] || "chatroom_backend_production_cable" %>
     migrations_paths: db/cable_migrate
