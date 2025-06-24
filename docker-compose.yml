@@ -1,26 +1,12 @@
 version: '3.8'
 services:
-  # db:
-  #   image: postgres:15
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: ${CHATROOM_BACKEND_DATABASE_USER}
-  #     POSTGRES_PASSWORD: ${CHATROOM_BACKEND_DATABASE_PASSWORD}
-  #     POSTGRES_DB: ${CHATROOM_BACKEND_DATABASE_NAME}
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-
-  web:
+  api:
     build: .
     command: /bin/bash -c "bundle exec rails server -p 3100 -b '0.0.0.0'"
     volumes:
       - .:/app
     ports:
       - "3100:3100"
-    # depends_on:
-    #   - db
     environment:
       RAILS_ENV: development
       CHATROOM_BACKEND_DATABASE_USER: ${CHATROOM_BACKEND_DATABASE_USER}
@@ -34,17 +20,3 @@ services:
       CHATROOM_BACKEND_DATABASE_NAME_QUEUE: ${CHATROOM_BACKEND_DATABASE_NAME_QUEUE}
       CHATROOM_BACKEND_DATABASE_NAME_CABLE: ${CHATROOM_BACKEND_DATABASE_NAME_CABLE}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-
-  # frontend:
-  #   build: ../chatroom-frontend
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - NEXT_PUBLIC_API_URL=http://localhost:3100/api
-  #   volumes:
-  #     - ../chatroom-frontend:/app
-  #   depends_on:
-  #     - web
-
-# volumes:
-#   postgres_data:
