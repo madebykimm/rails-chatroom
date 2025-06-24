@@ -14,7 +14,7 @@ services:
 
   web:
     build: .
-    command: /bin/bash -c "bundle exec rails db:migrate && bundle exec rails server -p 3100 -b '0.0.0.0'"
+    command: /bin/bash -c "bundle exec rails server -p 3100 -b '0.0.0.0'"
     volumes:
       - .:/app
     ports:
@@ -46,5 +46,5 @@ services:
   #   depends_on:
   #     - web
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
