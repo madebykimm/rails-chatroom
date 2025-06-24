@@ -1,16 +1,16 @@
 version: '3.8'
 services:
-  db:
-    image: postgres:15
-    restart: always
-    environment:
-      POSTGRES_USER: ${CHATROOM_BACKEND_DATABASE_USER}
-      POSTGRES_PASSWORD: ${CHATROOM_BACKEND_DATABASE_PASSWORD}
-      POSTGRES_DB: ${CHATROOM_BACKEND_DATABASE_NAME}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  # db:
+  #   image: postgres:15
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: ${CHATROOM_BACKEND_DATABASE_USER}
+  #     POSTGRES_PASSWORD: ${CHATROOM_BACKEND_DATABASE_PASSWORD}
+  #     POSTGRES_DB: ${CHATROOM_BACKEND_DATABASE_NAME}
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
 
   web:
     build: .
@@ -19,14 +19,14 @@ services:
       - .:/app
     ports:
       - "3100:3100"
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     environment:
       RAILS_ENV: development
       CHATROOM_BACKEND_DATABASE_USER: ${CHATROOM_BACKEND_DATABASE_USER}
       CHATROOM_BACKEND_DATABASE_PASSWORD: ${CHATROOM_BACKEND_DATABASE_PASSWORD}
-      CHATROOM_BACKEND_DATABASE_HOST: db
-      CHATROOM_BACKEND_DATABASE_PORT: 5432
+      CHATROOM_BACKEND_DATABASE_HOST: ${CHATROOM_BACKEND_DATABASE_HOST}
+      CHATROOM_BACKEND_DATABASE_PORT: ${CHATROOM_BACKEND_DATABASE_PORT}
       CHATROOM_BACKEND_DATABASE_NAME: ${CHATROOM_BACKEND_DATABASE_NAME}
       CHATROOM_BACKEND_DATABASE_NAME_TEST: ${CHATROOM_BACKEND_DATABASE_NAME_TEST}
       CHATROOM_BACKEND_DATABASE_NAME_PROD: ${CHATROOM_BACKEND_DATABASE_NAME_PROD}
